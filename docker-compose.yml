@@ -1,0 +1,39 @@
+version: "3.5"
+services:
+  www:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/localhost/htdocs
+    links:
+      - db
+      - mailhog
+    networks:
+      - default
+  db:
+    image: mysql:5.7.13
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: newsletter
+      MYSQL_USER: newsletter
+      MYSQL_PASSWORD: Pi3DT7Z8kWsxnv5q
+      MYSQL_ROOT_PASSWORD: Pi3DT7Z8kWsxnv5q
+    networks:
+      - default
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    ports:
+      - 8000:80
+    environment:
+      MYSQL_USER: newsletter
+      MYSQL_PASSWORD: Pi3DT7Z8kWsxnv5q
+      MYSQL_ROOT_PASSWORD: Pi3DT7Z8kWsxnv5q
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui

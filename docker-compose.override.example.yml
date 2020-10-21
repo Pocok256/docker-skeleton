@@ -1,0 +1,5 @@
+version: "3.5"
+services:
+  www:
+    volumes:
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa
